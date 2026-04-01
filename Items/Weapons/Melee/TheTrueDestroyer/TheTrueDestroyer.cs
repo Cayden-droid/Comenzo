@@ -1,35 +1,44 @@
-using Terraria.ModLoader;
+using Comenzo.Projectiles;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.TheDestroyer
+namespace Comenzo.Items.Weapons.Melee.TheTrueDestroyer
 {
-    public class TheDestoryer : ModItem
+    public class TheTrueDestroyer
+    : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Destroyer"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-            // Tooltip.SetDefault("This is a basic modded sword.");
+            DisplayName.SetDefault("The True Destroyer V2");// By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+                                                            // Tooltip.SetDefault("This is a basic modded sword.");
         }
 
         public override void SetDefaults()
         {
+            item.CloneDefaults(ItemID.TerraBlade);
+            item.shootSpeed *= 0.75f;
+            item.damage = (int)(item.damage * 3000);
+
             // ** Fields */
             // item.accessory = false;
             // item.active = true;
             // item.alpha = 0;
             // item.ammo = AmmoID.None;
             item.autoReuse = true; // ** Whether the item is in continuous use while the mouse button is held down.
-            // item.buffTime = 0;
-            // item.buffType = 0;
-            // item.buy = false;
-            // item.cartTrack = false;
-            // item.channel = false;
-            // item.color = Transparent;
-            // item.consumable = false;
-            // item.createTile = -1;
-            // item.createWall = -1;
-            item.crit = 10; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
-            item.damage = 202;
+                                   // item.buffTime = 0;
+                                   // item.buffType = 0;
+                                   // item.buy = false;
+                                   // item.cartTrack = false;
+                                   // item.channel = false;
+                                   // item.color = Transparent;
+                                   // item.consumable = false;
+                                   // item.createTile = -1;
+                                   // item.createWall = -1;
+            item.crit = 76; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
+            item.damage = 3000;
             // item.DD2Summon = false;
             // item.defense = 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
             // item.dye = 0;
@@ -54,7 +63,7 @@ namespace Comenzo.Items.Weapons.TheDestroyer
             // item.mech = false;
             // item.mountType = -1;
             // item.netID = 0;
-            // item.noMelee = false;
+            // item.noMelee = false; // ** If true, the item's using animation will not deal damage. Set to true on most weapons that aren't swords.
             // item.notAmmo = false;
             // item.noUseGraphic = false;
             // item.noWet = false;
@@ -62,8 +71,8 @@ namespace Comenzo.Items.Weapons.TheDestroyer
             // item.placeStyle = 0;
             // item.potion = false;
             // item.prefix = 0;
-            // item.questItem = false;
-            item.rare = ItemRarityID.Expert;
+            item.questItem = true;
+            // item.rare = 0;
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -81,19 +90,19 @@ namespace Comenzo.Items.Weapons.TheDestroyer
             // item.useAmmo = AmmoID.None;
             item.useAnimation = 5;
             // item.UseSound = null;
-            item.useStyle = ItemUseStyleID.SwingThrow; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
+            item.useStyle = 1; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
             item.useTime = 5; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
-            item.useTurn = true; // ** Whether the player can turn around while the using animation is happening.
-                                  // item.value = 0;
-                                  // item.vanity = false;
-                                  // item.wet = false;
-                                  // item.wetCount = 0;
+                              // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
+                              // item.value = 0;
+                              // item.vanity = false;
+                              // item.wet = false;
+                              // item.wetCount = 0;
 
 
 
             // ** Size */
-            item.height = 5;
-            item.width = 10;
+            item.height = 20;
+            item.width = 20;
 
 
             // ** Damage Type */
@@ -140,11 +149,45 @@ namespace Comenzo.Items.Weapons.TheDestroyer
             // item.globalItems = new GlobalItem[0];
         }
 
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			type = ProjectileType<TerraBeam>();
+			return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+		}
+
+
+	// public class TerraBeam : ModProjectile
+	// {
+	// 	public override void SetStaticDefaults() {
+
+	// 	}
+
+	// 	public override void SetDefaults() {
+	// 		projectile.CloneDefaults(ProjectileID.TerraBeam);
+	// 		aiType = ProjectileID.TerraBeam;
+	// 	}
+
+	// 	public override bool PreKill(int timeLeft) {
+	// 		projectile.type = ProjectileID.TerraBeam;
+	// 		return true;
+	// 	}
+
+	// 	public override bool OnTileCollide(Vector2 oldVelocity) {
+	// 		for (int i = 0; i < 5; i++) {
+	// 			int a = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y - 16f, Main.rand.Next(-10, 11) * .25f, Main.rand.Next(-10, -5) * .25f, ProjectileID.Starfury, (int)(projectile.damage * .5f), 0, projectile.owner);
+	// 			Main.projectile[a].aiStyle = 1;
+	// 			Main.projectile[a].tileCollide = true;
+	// 		}
+	// 		return true;
+	// 	}
+	// }
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.DirtBlock, 1);
-            recipe.AddTile(TileID.WorkBenches);
+            recipe.AddIngredient(ItemID.Starfury);
+            recipe.AddRecipeGroup("IronBar", 5);
+            recipe.AddTile(TileID.FireflyinaBottle);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

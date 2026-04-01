@@ -1,25 +1,24 @@
-
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace Comenzo.Items.Weapons.ArcStaff
+namespace Comenzo.Items.Weapons.Melee.TheTruePath
 {
-    public class ArcStaff : ModItem
+    public class TheTruePath : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arc Staff"); // By de+fault, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-            // Tooltip.SetDefault("This is a basic modded sword.");
+            // DisplayName.SetDefault("platinum"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+            Tooltip.SetDefault("This is a basic modded sword.");
         }
 
         public override void SetDefaults()
         {
-            // ** Fields */
+			// ** Fields */
             // item.accessory = false;
             // item.active = true;
             // item.alpha = 0;
             // item.ammo = AmmoID.None;
-            item.autoReuse = true; // ** Whether the item is in continuous use while the mouse button is held down.
+            item.autoReuse = true; // false // ** Whether the item is in continuous use while the mouse button is held down.
             // item.buffTime = 0;
             // item.buffType = 0;
             // item.buy = false;
@@ -29,8 +28,8 @@ namespace Comenzo.Items.Weapons.ArcStaff
             // item.consumable = false;
             // item.createTile = -1;
             // item.createWall = -1;
-            item.crit = 71; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
-            item.damage = 690;
+            item.crit = 100; // 0; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
+            item.damage = 50; // 0
             // item.DD2Summon = false;
             // item.defense = 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
             // item.dye = 0;
@@ -44,7 +43,7 @@ namespace Comenzo.Items.Weapons.ArcStaff
             // item.healMana = 0;
             // item.holdStyle = 0;
             // item.instanced = false;
-            // item.knockBack = 0f; // ** 	The force of the knock back. Max value is 20. */
+            item.knockBack = 20; // 0f; // ** 	The force of the knock back. Max value is 20. */
             // item.lavaWet = false;
             // item.lifeRegen = 0;
             // item.makeNPC = 0;
@@ -63,8 +62,8 @@ namespace Comenzo.Items.Weapons.ArcStaff
             // item.placeStyle = 0;
             // item.potion = false;
             // item.prefix = 0;
-            // item.questItem = false;
-            item.rare = ItemRarityID.Expert;
+			// item.questItem = false;
+            item.rare = ItemRarityID.Green; // 0
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -80,44 +79,44 @@ namespace Comenzo.Items.Weapons.ArcStaff
             // item.type = 0;
             // item.uniqueStack = false;
             // item.useAmmo = AmmoID.None;
-            item.useAnimation = 15;
-            // item.UseSound = null;
-            item.useStyle = ItemUseStyleID.SwingThrow; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
-            item.useTime = 15; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
-            item.useTurn = true; // ** Whether the player can turn around while the using animation is happening.
-                                  // item.value = 0;
-                                  // item.vanity = false;
-                                  // item.wet = false;
-                                  // item.wetCount = 0;
+            item.useAnimation = 20; // 100
+            item.UseSound = SoundID.Item1; // null;
+            item.useStyle = ItemUseStyleID.SwingThrow; // 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
+            item.useTime = 15; // 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
+            // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
+            item.value = 10000; // 0;
+            // item.vanity = false;
+            // item.wet = false;
+            // item.wetCount = 0;
 
 
 
-            // ** Size */
-            item.height = 15;
-            item.width = 15;
+			// ** Size */
+            item.height = 40; // 0
+            item.width = 40; // 0
 
 
-            // ** Damage Type */
-            item.melee = true;
+			// ** Damage Type */
+            // item.melee = false;
             // item.magic = false;
             // item.ranged = false;
             // item.thrown = false;
             // item.summon = false;
 
 
-            // ** Tool Power */
+			// ** Tool Power */
             // item.axe = 0;
             // item.pick = 0;
             // item.hammer = 0;
 
 
-            // ** Fishing Power */
+			// ** Fishing Power */
             // item.bait = 0;
             // item.fishingPole = 0;
 
 
-            // ** Assigned Slot */
-            // item.backSlot = -1;
+			// ** Assigned Slot */
+			// item.backSlot = -1;
             // item.balloonSlot = -1;
             // item.bodySlot = -1;
             // item.faceSlot = -1;
@@ -133,12 +132,12 @@ namespace Comenzo.Items.Weapons.ArcStaff
             // item.wingSlot = -1;
 
 
-            // ** Static Fields */
-            // item.staff = false;
+			// ** Static Fields */
+			// item.staff = false;
 
-            // ** tModLoader Only */
-            // item.modItem = null;
-            // item.globalItems = new GlobalItem[0];
+			// ** tModLoader Only */
+			// item.modItem = null;
+			// item.globalItems = new GlobalItem[0];
         }
 
         public override void AddRecipes()
