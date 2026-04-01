@@ -19,8 +19,8 @@ namespace Comenzo.Items.Weapons.Summon.Whip
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.Bufftype<WhipDebuff>(), 240); 
-            Main.player[Projectile.onwer].MinionAttackTargetNPC = target.whoAmI; 
+            target.AddBuff(ModContent.Bufftype<WhipDebuff>(), 240); // Applies the tag damage debuff
+            Main.player[Projectile.onwer].MinionAttackTargetNPC = target.whoAmI; // This tells the minion to target whichever enemy is marked
             Projectile.damage  = (int)(Projectile.damage * 0.25f); // Multi-hit penalty, decreases damage by 25%
         }
 
@@ -28,10 +28,10 @@ namespace Comenzo.Items.Weapons.Summon.Whip
         {
             Texture2D texture = TextureAssets.FishingLine.value; 
             Rectangle frame = texture.Frame(); 
-            Vector2 origin = new Vector2(frame.Width / 2, 2); 
+            Vector2 origin = new Vector2(frame.Width / 2, 2); // This is creating a new vector which will be used to draw the line. 
 
             Vector2 pos = list[0]; 
-            for (int i = 0; i < list.Count - 1; i++)
+            for (int i = 0; i < list.Count - 1; i++) 
             {
                 Vector2 element = list[i];
                 Vector2 diff = list[i + 1] - element;
