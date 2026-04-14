@@ -1,5 +1,3 @@
-using Comenzo.Items.Placeable.Anvils.MagmaAnvil;
-
 namespace Comenzo.Items.Weapons.Summon.Whip
 {
     public class WhipProjectile : ModProjectile
