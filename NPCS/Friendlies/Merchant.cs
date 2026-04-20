@@ -100,7 +100,96 @@ namespace Comenzo.NPCS.Friendlies
                 string variant = "";
                 if (NPC.IsShimmerVariant)
                     variant += "_Shimmer";
+                if (NPC.altTexture == 1) 
+                    variant += "_Party";
+                int hatGore = NPCP.GetPartyHatGore();
+                int headGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Head").Type;
+                int armGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Arm").Type;
+                int legGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Leg").Type;
+
+                if (hatGore > 0)
+                {
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, hatGore);
+                }
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, headGore, 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.veloctiy, armGore);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.veloctiy, armGore);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
             }
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (source is EntitySource_SpawnNPC)
+            {
+                TownNPCRespawnSystem.unlockedExamplePersonSpawn = true;
+            }
+        }
+
+        public override bool CanTownNPCSpawn(int numTownNPCs)
+        {
+            if (TownNPCRespawnSystem.unlockedExamplePersonSpawn)
+            {
+                return true; 
+            }
+
+            foreach (var player in Main.ActivePlayers)
+            {
+                if (player.inventory.Any(item => item.type == ModContent.ItemType<>() || item.type == ModCotent.ItemType<Items.Placeable>()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override ITownNPCProfile TownNPCProfile()
+        {
+            return NPCProfile;
+        }
+
+        public override List<string> SetNPCNameList()
+        {
+            return new List<string>()
+            {
+                "Merchant",
+                ""
+            };
+        }
+
+        public override string GetChat()
+        {
+            WeightedRandom<string> chat = new WeightedRandom<string>();
+
+            int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
+            if (partyGirl >= 0 && Main.rand.NextBool(4))
+            {
+                chat.Add(Language.GetTextValue("Mods.Comenzo.Dialouge.Merchant.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
+            }
+
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue1"));
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue3"));
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue4"));
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.CommonDialogue"), 5.0);
+            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.RareDialogue"), 0.1);
+
+            NumberOfTimesTalkedTo++; 
+            if (NumberOfTimesTalkedTo >= 10)
+            {
+                chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.TalkALot"));
+            }
+
+            string chosenChat = chat; 
+
+            if (chosenChat == Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue4"))
+            {
+                Main.npcChatCornerItem = ItemID.HiveBackpack;
+            }
+
+            return chosenChat; 
         }
     }
 }
