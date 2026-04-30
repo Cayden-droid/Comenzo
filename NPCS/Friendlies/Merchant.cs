@@ -16,21 +16,23 @@ namespace Comenzo.NPCS.Friendlies
 
         public override void Load()
         {
+            // This adds a different look for the NPCs head when the npc is shimmered
             ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
         }
 
         public override void SetStaticDefaults()
         {
+            // Total amount of frames that the NPC has to make an action 
             Main.npcFrameCount[Type] = 25;
 
-            NPCID.Sets.ExtraFramesCount[Type] = 9;
-            NPCID.Sets.AttackFrameCount[Type] = 4;
-            NPCID.Sets.DangerDetectRange[Type] = 700;
-            NPCID.Sets.AttackType[Type] = 0;
-            NPCID.Sets.AttackTime[Type] = 90;
-            NPCID.Sets.AttackAverageChance[Type] = 30;
-            NPCID.Sets.HatOffsetY[Type] = 4;
-            NPCID.Sets.ShimmerTownTransform[Type] = true;
+            NPCID.Sets.ExtraFramesCount[Type] = 9; // Frame count for things like talking to other NPCs or sitting in a chair
+            NPCID.Sets.AttackFrameCount[Type] = 4; // Frame count for an attack
+            NPCID.Sets.DangerDetectRange[Type] = 700; // How far away an enemy can be detected in pixels 
+            NPCID.Sets.AttackType[Type] = 0; // Type of attack the NPC performs 
+            NPCID.Sets.AttackTime[Type] = 90; // Amount of time in ticks for the NPC's attack animation to end from the start
+            NPCID.Sets.AttackAverageChance[Type] = 30; // Denominator for the chance for the NPC to attack, (1/30)
+            NPCID.Sets.HatOffsetY[Type] = 4; // Spawns the party hat at a offset
+            NPCID.Sets.ShimmerTownTransform[Type] = true; // Defines if the NPC has a shimmer form
 
             NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<MerchantEmote>();
 
@@ -190,6 +192,132 @@ namespace Comenzo.NPCS.Friendlies
             }
 
             return chosenChat; 
+        }
+
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("LegacyInterface.28");
+            button2 = "Awesomeifty";
+            if (Main.LocalPlayer.HasItem(ItemID.HiveBackpack))
+            {
+                button = "Upgrade" + Lang.GetItemNameValue(ItemID.HiveBackpack);
+            }
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref string shop)
+        {
+            if (firstButton)
+            {
+                if (Main.LocalPlayer.HasItem(ItemID.HiveBackpack))
+                {
+                    SoundEngine.PlaySound(SoundID.Item37);
+
+                    Main.npcChatText = UpgradedText.Value;
+
+                    int hiveBackpackItemIndex = Main.LocalPlayer.FindItem(ItemID.HiveBackpack);
+                    var entitySource = NPC.GetSource_GiftOrReward();
+
+                    Main.LocalPlayer.inventory[hiveBackpackItemIndex].TurnToAir(); 
+                    Main.LocalPlayer.QuickSpawnItem(entitySource, ModContent.ItemType<WaspNest>());
+
+                    return;
+                }
+
+                shop = ShopName;
+            }
+        }
+
+        public override void AddShops()
+        {
+            var npcShop = new NPCShop(Type, ShopName);
+
+            npcShop.Register();
+        }
+
+        public override void ModifyActiveShop(string shopName, Item[] items)
+        {
+            foreach (Item item in items)
+            {
+                if (item == null || item.type == ItemID.None)
+                {
+                    continue; 
+                }
+
+                if (NPC.IsShimmerVariant)
+                {
+                    int value = item.shopCustomPrice ?? item.value;
+                    item.shopCustomPrice = value / 2;
+                }
+            }
+        }
+
+        public override void ModifyNPCLoot()
+        {
+            npcLoot.Add(ItemDropRule.Common(ModCotent.ItemType<MagmaAnvil>()));
+        }
+
+        public override bool CanGoToStatue(bool toKingStatue) => true;
+
+        public override void OnGoToStatue(bool toKingStatue)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write((byte)Comenzo.MessageType.TeleportToStatue);
+                packet.Write((byte)NPC.whoAmI);
+                packet.Send();
+            }
+
+            else
+            {
+                StatueTeleport();
+            }
+        }
+
+        public void StatueTeleport()
+        {
+            for (int i = 0; i < 30; i++) {
+                Vector2 position = Main.rand.NextVector2Square(-20, 21);
+                if (Math.Abs(position.X) > Math.Abs(position.Y))
+                {
+                    position.X = Math.Sign(position.X) * 20;
+                }
+
+                else
+                {
+                    postion.Y = Math.Sign(position.Y) * 20;
+                }
+
+                Dust.NewDustPerfect(NPC.Center + position, ModContent.DustType<Sparkle>(), Vector2.Zero).noGravity = true;
+            }
+        }
+
+        public override void TownNPCAttackStrength(ref int damage, ref float knockback)
+        {
+            damage = 20;
+            knockback = 4f;
+        }
+
+        public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
+        {
+            projType = ModContent.ProjectileType<SparklingBall>();
+            attackDelay = 1;
+        }
+
+        public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffSet)
+        {
+            multiplier = 12f; 
+            randomOffSet = 2f; 
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            NumberOfTimesTalkedTo = tag.GetInt("numberOfTimesTalkedTo");
+        }
+
+        public override void SaveData()
+        {
+            tag["numberOfTimesTalkedTo"] = NumberOfTimesTalkedTo;
         }
     }
 }
