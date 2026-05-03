@@ -24,7 +24,7 @@ namespace Comenzo.Items.Weapons.Ranged.LongBow
 
         public override void AddRecipes()
         {
-            Recpie.Create(ItemID.OldGrimorie)
+            Recipe.Create(ItemID.OldGrimorie)
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();

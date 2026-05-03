@@ -12,7 +12,7 @@ namespace Comenzo.Items.Weapons.Summon.Whip
 
         public override void AddRecipes()
         {
-            Recpie.Create(ItemID.OldGrimorie)
+            Recipe.Create(ItemID.Whip)
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();
