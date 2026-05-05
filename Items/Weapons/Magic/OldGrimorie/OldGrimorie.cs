@@ -3,6 +3,11 @@ namespace Comenzo.Items.Weapons.Magic.OldGrimorie
 {
     public class OldGrimorie : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Old Grimorie");
+            Tooltip.SetDefault("A tattered old spell book");
+        }
         public override void SetDefaults()
         {
             Item.DefaultToStaff(ProjectileID.BlackBolt, 7, 20, 11);
