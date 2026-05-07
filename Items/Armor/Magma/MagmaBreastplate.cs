@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,11 +20,11 @@ namespace Comenzo.Items.Armor.Magma
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Magma Breastplate");
-            Tooltip.SetDefault("This body armor provides"
+            // DisplayName.SetDefault("Magma Breastplate");
+            /* Tooltip.SetDefault("This body armor provides"
                 + "\nImmunity to 'On Fire!'"
                 + "\n5 Life Regen"
-                + "\n+20 max mana and +1 max minions");
+                + "\n+20 max mana and +1 max minions"); */
         }
 
         public override void SetDefaults()
@@ -45,7 +47,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.crit = 0; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
             // item.damage = 0;
             // item.DD2Summon = false;
-            item.defense = 60; // 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
+            Item.defense = 60; // 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
             // item.dye = 0;
             // item.expert = false;
             // item.expertOnly = false;
@@ -59,7 +61,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.instanced = false;
             // item.knockBack = 0f; // ** 	The force of the knock back. Max value is 20. */
             // item.lavaWet = false;
-            item.lifeRegen = 500;
+            Item.lifeRegen = 500;
             // item.makeNPC = 0;
             // item.mana = 0;
             // item.manaIncrease = 0;
@@ -77,7 +79,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.potion = false;
             // item.prefix = 0;
             // item.questItem = false;
-            item.rare = ItemRarityID.Green; // 0;
+            Item.rare = ItemRarityID.Green; // 0;
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -98,7 +100,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.useStyle = 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
             // item.useTime = 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
             // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
-            item.value = 10000; // 0;
+            Item.value = 10000; // 0;
                                 // item.vanity = false;
                                 // item.wet = false;
                                 // item.wetCount = 0;
@@ -106,8 +108,8 @@ namespace Comenzo.Items.Armor.Magma
 
 
             // ** Size */
-            item.height = 18; // 0;
-            item.width = 18; // 0;
+            Item.height = 18; // 0;
+            Item.width = 18; // 0;
 
 
             // ** Damage Type */
@@ -163,7 +165,7 @@ namespace Comenzo.Items.Armor.Magma
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             // recipe.AddIngredient(ItemType<EquipMaterial>(), 60);
             // recipe.AddTile(TileType<ExampleWorkbench>());
 
@@ -171,9 +173,7 @@ namespace Comenzo.Items.Armor.Magma
             recipe.AddIngredient(ItemType<Placeable.Bars.MagmaBar.MagmaBar>(), 25);
             // recipe.AddTile(TileType<MagmaAnvil>());
             recipe.AddTile(TileID.MythrilAnvil);
-
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

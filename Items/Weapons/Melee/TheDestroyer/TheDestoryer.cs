@@ -1,5 +1,9 @@
-using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Comenzo.Items.Weapons.Melee.TheDestroyer
 {
@@ -7,7 +11,7 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Destroyer"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+            // DisplayName.SetDefault("The Destroyer"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
             // Tooltip.SetDefault("This is a basic modded sword.");
         }
 
@@ -18,7 +22,7 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
             // item.active = true;
             // item.alpha = 0;
             // item.ammo = AmmoID.None;
-            item.autoReuse = true; // ** Whether the item is in continuous use while the mouse button is held down.
+            Item.autoReuse = true; // ** Whether the item is in continuous use while the mouse button is held down.
             // item.buffTime = 0;
             // item.buffType = 0;
             // item.buy = false;
@@ -28,8 +32,8 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
             // item.consumable = false;
             // item.createTile = -1;
             // item.createWall = -1;
-            item.crit = 10; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
-            item.damage = 202;
+            Item.crit = 10; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
+            Item.damage = 202;
             // item.DD2Summon = false;
             // item.defense = 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
             // item.dye = 0;
@@ -63,7 +67,7 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
             // item.potion = false;
             // item.prefix = 0;
             // item.questItem = false;
-            item.rare = ItemRarityID.Expert;
+            Item.rare = ItemRarityID.Expert;
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -79,11 +83,11 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
             // item.type = 0;
             // item.uniqueStack = false;
             // item.useAmmo = AmmoID.None;
-            item.useAnimation = 5;
+            Item.useAnimation = 5;
             // item.UseSound = null;
-            item.useStyle = ItemUseStyleID.SwingThrow; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
-            item.useTime = 5; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
-            item.useTurn = true; // ** Whether the player can turn around while the using animation is happening.
+            Item.useStyle = ItemUseStyleID.Swing; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
+            Item.useTime = 5; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
+            Item.useTurn = true; // ** Whether the player can turn around while the using animation is happening.
                                   // item.value = 0;
                                   // item.vanity = false;
                                   // item.wet = false;
@@ -92,12 +96,12 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
 
 
             // ** Size */
-            item.height = 5;
-            item.width = 10;
+            Item.height = 5;
+            Item.width = 10;
 
 
             // ** Damage Type */
-            item.melee = true;
+            Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
             // item.magic = false;
             // item.ranged = false;
             // item.thrown = false;
@@ -142,11 +146,10 @@ namespace Comenzo.Items.Weapons.Melee.TheDestroyer
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.DirtBlock, 1);
             recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

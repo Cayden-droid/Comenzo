@@ -1,3 +1,9 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Comenzo.Items.Weapons.Ranged.LongBow
 {
@@ -29,12 +35,9 @@ namespace Comenzo.Items.Weapons.Ranged.LongBow
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
-
-
-        public override Vector2? HoldOffSet() // The position of where the weapon is displayed based off the players hands 
-        {
-            return new Vector2(2f, -2f);
-        }
-
+        // public override Vector2? HoldoutOffSet() // The position of where the weapon is displayed based off the players hands 
+        // {
+        //     return new Vector2(2f, -2f);
+        // }
     }
 }

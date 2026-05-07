@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Localization;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Comenzo.Tiles.Bars.MagmaBar
 {
 	public class MagmaBar : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileShine[Type] = 1100;
 			Main.tileSolid[Type] = true;
@@ -21,18 +21,18 @@ namespace Comenzo.Tiles.Bars.MagmaBar
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 
+			VanillaFallbackOnModDeletion = TileID.MetalBarss;
+
 			AddMapEntry(new Color(200, 200, 200), Language.GetText("MapObject.MetalBar")); // localized text for "Metal Bar"
 		}
 
-		public override bool Drop(int i, int j)
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
-			Tile t = Main.tile[i, j];
-			int style = t.frameX / 18;
-			if (style == 0) // It can be useful to share a single tile with multiple styles. This code will let you drop the appropriate bar if you had multiple.
+			if (!WorldGen.SolidTileAllowBottomSlope(i, j + 1))
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ItemType<Items.Placeable.Bars.MagmaBar.MagmaBar>());
+				WorldGen.KillTile(i, j);
 			}
-			return base.Drop(i, j);
+			return true;
 		}
 	}
 }

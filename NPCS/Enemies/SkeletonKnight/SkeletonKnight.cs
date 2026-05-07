@@ -1,3 +1,22 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
+using Terraria.GameContent.UI;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.Utilities;
+
 namespace Comenzo.NPCS.Enemies.SkeletonKnight
 {
     public class SkeletonKnight : ModNPC
@@ -33,9 +52,9 @@ namespace Comenzo.NPCS.Enemies.SkeletonKnight
             SpawnBiomes = [GameContent.GetInstance<CavernBiome>().Type]; // Tells the game which biome the Npc spawns in 
         }
 
-        public override void ModfiyNPCLoot(NPCLoot npcloot)
+        public override void ModfiyNPCLoot(NPCLoot npcLoot)
         {
-            npcloot.Add(ItemDropRule.Common(ItemID.BrokenSword, 10)); // 1 in 10 chance to drop the broken sword item
+            npcLoot.Add(ItemDropRule.Common(ItemID.BrokenSword, 10)); // 1 in 10 chance to drop the broken sword item
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -43,7 +62,7 @@ namespace Comenzo.NPCS.Enemies.SkeletonKnight
           return SpawnCondition.OverworldNightMonster.Chance * 0.2f; // Spawns with 1/5 the chance of a zombie  
         }
 
-        public override void SetBestiary(BestiaryDatabase database, BesitaryEntry besitaryEntry)
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             // Used instead of calling Add mutliple times, adds multiple items at once
             besitaryEntry.Info.AddRange([

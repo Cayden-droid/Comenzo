@@ -1,5 +1,9 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Comenzo.Items.Weapons.Melee.TheTruePath
 {
@@ -8,7 +12,7 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("platinum"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-            Tooltip.SetDefault("This is a basic modded sword.");
+            // Tooltip.SetDefault("This is a basic modded sword.");
         }
 
         public override void SetDefaults()
@@ -18,7 +22,7 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
             // item.active = true;
             // item.alpha = 0;
             // item.ammo = AmmoID.None;
-            item.autoReuse = true; // false // ** Whether the item is in continuous use while the mouse button is held down.
+            Item.autoReuse = true; // false // ** Whether the item is in continuous use while the mouse button is held down.
             // item.buffTime = 0;
             // item.buffType = 0;
             // item.buy = false;
@@ -28,8 +32,8 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
             // item.consumable = false;
             // item.createTile = -1;
             // item.createWall = -1;
-            item.crit = 100; // 0; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
-            item.damage = 50; // 0
+            Item.crit = 100; // 0; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
+            Item.damage = 50; // 0
             // item.DD2Summon = false;
             // item.defense = 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
             // item.dye = 0;
@@ -43,7 +47,7 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
             // item.healMana = 0;
             // item.holdStyle = 0;
             // item.instanced = false;
-            item.knockBack = 20; // 0f; // ** 	The force of the knock back. Max value is 20. */
+            Item.knockBack = 20; // 0f; // ** 	The force of the knock back. Max value is 20. */
             // item.lavaWet = false;
             // item.lifeRegen = 0;
             // item.makeNPC = 0;
@@ -63,7 +67,7 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
             // item.potion = false;
             // item.prefix = 0;
 			// item.questItem = false;
-            item.rare = ItemRarityID.Green; // 0
+            Item.rare = ItemRarityID.Green; // 0
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -79,12 +83,12 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
             // item.type = 0;
             // item.uniqueStack = false;
             // item.useAmmo = AmmoID.None;
-            item.useAnimation = 20; // 100
-            item.UseSound = SoundID.Item1; // null;
-            item.useStyle = ItemUseStyleID.SwingThrow; // 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
-            item.useTime = 15; // 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
+            Item.useAnimation = 20; // 100
+            Item.UseSound = SoundID.Item1; // null;
+            Item.useStyle = ItemUseStyleID.Swing; // 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
+            Item.useTime = 15; // 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
             // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
-            item.value = 10000; // 0;
+            Item.value = 10000; // 0;
             // item.vanity = false;
             // item.wet = false;
             // item.wetCount = 0;
@@ -92,8 +96,8 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
 
 
 			// ** Size */
-            item.height = 40; // 0
-            item.width = 40; // 0
+            Item.height = 40; // 0
+            Item.width = 40; // 0
 
 
 			// ** Damage Type */
@@ -142,11 +146,10 @@ namespace Comenzo.Items.Weapons.Melee.TheTruePath
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.DirtBlock, 1);
             recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

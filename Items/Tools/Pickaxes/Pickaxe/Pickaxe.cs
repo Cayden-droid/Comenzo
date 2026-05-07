@@ -1,4 +1,3 @@
-
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -11,37 +10,35 @@ namespace Comenzo.Items.Tools.Pickaxes.Pickaxe
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("This is a modded pickaxe.");
+            // Tooltip.SetDefault("This is a modded pickaxe.");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 20;
-            item.melee = true;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 5;
-            item.useAnimation = 5;
-            item.pick = 2200;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 20;
+            Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 5;
+            Item.useAnimation = 5;
+            Item.pick = 2200;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
 
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             //recipe.AddIngredient(ItemType<ExampleItem>(), 10);
             //recipe.AddTile(TileType<ExampleWorkbench>());
 
             recipe.AddIngredient(ItemID.Wood, 25);
             recipe.AddTile(TileID.WorkBenches);
-
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
         public override void MeleeEffects(Player player, Rectangle hitbox)

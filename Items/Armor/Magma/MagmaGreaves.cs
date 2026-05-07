@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,9 +12,9 @@ namespace Comenzo.Items.Armor.Magma
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magma Greaves");
-            Tooltip.SetDefault("This leg armor provides"
-                + "\n100% increased movement speed");
+            // DisplayName.SetDefault("Magma Greaves");
+            /* Tooltip.SetDefault("This leg armor provides"
+                + "\n100% increased movement speed"); */
         }
 
         public override void SetDefaults()
@@ -35,7 +37,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.crit = 0; // ** The base critical chance for this item (%). Remember that the player has a base crit chance of 4. */
             // item.damage = 0;
             // item.DD2Summon = false;
-            item.defense = 15; // 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
+            Item.defense = 15; // 0; // ** The amount of defense this item provides when equipped, either as an accessory or armor. */
                                // item.dye = 0;
                                // item.expert = false;
                                // item.expertOnly = false;
@@ -49,7 +51,7 @@ namespace Comenzo.Items.Armor.Magma
                                // item.instanced = false;
                                // item.knockBack = 0f; // ** 	The force of the knock back. Max value is 20. */
                                // item.lavaWet = false;
-            item.lifeRegen = 1;
+            Item.lifeRegen = 1;
             // item.makeNPC = 0;
             // item.mana = 0;
             // item.manaIncrease = 0;
@@ -67,7 +69,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.potion = false;
             // item.prefix = 0;
             // item.questItem = false;
-            item.rare = ItemRarityID.Green; // 0;
+            Item.rare = ItemRarityID.Green; // 0;
             // item.release = 0;
             // item.reuseDelay = 0;
             // item.scale = 1f;
@@ -88,7 +90,7 @@ namespace Comenzo.Items.Armor.Magma
             // item.useStyle = 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
             // item.useTime = 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
             // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
-            item.value = 10000; // 0;
+            Item.value = 10000; // 0;
                                 // item.vanity = false;
                                 // item.wet = false;
                                 // item.wetCount = 0;e
@@ -96,8 +98,8 @@ namespace Comenzo.Items.Armor.Magma
 
 
             // ** Size */
-            item.height = 18; // 0;
-            item.width = 18; // 0;
+            Item.height = 18; // 0;
+            Item.width = 18; // 0;
 
 
             // ** Damage Type */
@@ -146,7 +148,7 @@ namespace Comenzo.Items.Armor.Magma
 
         public override void UpdateEquip(Player player)
         {
-            item.lifeRegen = 10;
+            Item.lifeRegen = 10;
 
             Player.jumpHeight  += 30; // 15;
             Player.jumpSpeed   += 7f; // 5.01f;
@@ -157,15 +159,13 @@ namespace Comenzo.Items.Armor.Magma
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             // recipe.AddIngredient(ItemType<EquipMaterial>(), 45);
             // recipe.AddTile(TileType<ExampleWorkbench>());
 
             recipe.AddIngredient(ItemType<Placeable.Bars.MagmaBar.MagmaBar>(), 15);
             recipe.AddTile(TileID.MythrilAnvil);
-
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

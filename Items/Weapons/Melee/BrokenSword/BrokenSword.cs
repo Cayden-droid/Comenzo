@@ -1,6 +1,9 @@
-using Terraria.ModLoader;
-
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Comenzo.Items.Weapons.Melee.BrokenSword
 {
@@ -8,8 +11,8 @@ namespace Comenzo.Items.Weapons.Melee.BrokenSword
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Broken Sword"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-            Tooltip.SetDefault("A forgotten relic of the past");
+            // DisplayName.SetDefault("Broken Sword"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+            // Tooltip.SetDefault("A forgotten relic of the past");
         }
 
         public override void SetDefaults()
@@ -36,11 +39,10 @@ namespace Comenzo.Items.Weapons.Melee.BrokenSword
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.DirtBlock, 1);
             recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }
