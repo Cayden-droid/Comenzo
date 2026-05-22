@@ -1,9 +1,12 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Placeable.Anvils.MagmaAnvil
+namespace SecretsOfMana.Items.Placeable.Anvils.MagmaAnvil
 {
 	public class MagmaAnvil : ModItem
 	{
@@ -24,7 +27,7 @@ namespace Comenzo.Items.Placeable.Anvils.MagmaAnvil
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.value = 150;
-			Item.createTile = TileType<Tiles.Anvils.MagmaAnvil.MagmaAnvil>();
+			Item.createTile = TileType<Tiles.MagmaAnvil.MagmaAnvil>();
 		}
 
 		public override void AddRecipes() {

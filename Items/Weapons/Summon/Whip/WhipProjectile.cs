@@ -1,11 +1,13 @@
+using SecretsOfMana.Buffs;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Summon.Whip
+namespace SecretsOfMana.Items.Weapons.Summon.Whip
 {
     public class WhipProjectile : ModProjectile
     {
@@ -24,14 +26,14 @@ namespace Comenzo.Items.Weapons.Summon.Whip
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.Bufftype<WhipDebuff>(), 240); // Applies the tag damage debuff
-            Main.player[Projectile.onwer].MinionAttackTargetNPC = target.whoAmI; // This tells the minion to target whichever enemy is marked
+            target.AddBuff(ModContent.BuffType<WhipDebuff>(), 240); // Applies the tag damage debuff
+            Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI; // This tells the minion to target whichever enemy is marked
             Projectile.damage  = (int)(Projectile.damage * 0.25f); // Multi-hit penalty, decreases damage by 25%
         }
 
         private void DrawLine(List<Vector2> list) // This draws a line between all points of a whip incase of empty space between sprites
         {
-            Texture2D texture = TextureAssets.FishingLine.value; 
+            Texture2D texture = TextureAssets.FishingLine.Value; 
             Rectangle frame = texture.Frame(); 
             Vector2 origin = new Vector2(frame.Width / 2, 2); // This is creating a new vector which will be used to draw the line. 
 
@@ -45,7 +47,7 @@ namespace Comenzo.Items.Weapons.Summon.Whip
                 Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White); 
                 Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
 
-                Main.EntitiySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0); 
+                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0); 
 
                 pos += diff;
             }

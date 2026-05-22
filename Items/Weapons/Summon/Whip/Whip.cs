@@ -1,12 +1,14 @@
-using Comenzo.Items.Weapons.Summon.Whip;
+using SecretsOfMana.Items.Weapons.Summon.Whip;
+using SecretsOfMana.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Summon.Whip
+namespace SecretsOfMana.Items.Weapons.Summon.Whip
 {
     public class Whip : ModItem
     {
@@ -19,7 +21,7 @@ namespace Comenzo.Items.Weapons.Summon.Whip
 
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.Whip)
+            Recipe.Create(ModContent.ItemType<Whip>())
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();

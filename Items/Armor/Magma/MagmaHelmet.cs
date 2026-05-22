@@ -3,17 +3,18 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Armor.Magma
+namespace SecretsOfMana.Items.Armor.Magma
 {
     [AutoloadEquip(EquipType.Head)]
     public class MagmaHelmet : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magma Helmet");
-            Tooltip.SetDefault("This helmet provides the Burning Buff!");
+            // DisplayName.SetDefault("Magma Helmet");
+            // Tooltip.SetDefault("This helmet provides the Burning Buff!");
         }
 
         public override void SetDefaults()

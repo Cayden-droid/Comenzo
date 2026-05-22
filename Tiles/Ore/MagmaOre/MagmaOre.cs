@@ -3,9 +3,10 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Tiles.Ore.MagmaOre
+namespace SecretsOfMana.Tiles.Ore.MagmaOre
 {
 	public class MagmaOre : ModTile
 	{
@@ -25,9 +26,7 @@ namespace Comenzo.Tiles.Ore.MagmaOre
 			AddMapEntry(new Color(152, 171, 198), name);
 
 			// dustType = mod.ItemType("Sparkle");
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Items.Placeable.Ore.MagmaOre.MagmaOre>();
 			HitSound = SoundID.Tink;
-			soundStyle/* tModPorter Note: Removed. Integrate into HitSound */ = 1;
 			//mineResist = 3f;
 			MinPick = 450;
 		}

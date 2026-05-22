@@ -1,8 +1,12 @@
-﻿using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Placeable.Ore.MagmaOre
+namespace SecretsOfMana.Items.Placeable.Ore.MagmaOre
 {
 	public class MagmaOre : ModItem
 	{

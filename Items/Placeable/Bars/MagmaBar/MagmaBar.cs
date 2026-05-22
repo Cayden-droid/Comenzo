@@ -1,11 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using SecretsOfMana.Tiles.Bars.MagmaBarTile;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Placeable.Bars.MagmaBar
+
+namespace SecretsOfMana.Items.Placeable.Bars.MagmaBar
 {
     public class MagmaBar : ModItem
     {
@@ -16,7 +19,7 @@ namespace Comenzo.Items.Placeable.Bars.MagmaBar
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.MagmaBar>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<MagmaBarTile>());
             Item.width = 20;
             Item.height = 20;
             Item.maxStack = 99;

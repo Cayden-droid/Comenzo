@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Comenzo.Items.Weapons.Ranged.LongBow
+namespace SecretsOfMana.Items.Weapons.Ranger.LongBow
 {
     public class LongBow : ModItem
     {
@@ -20,17 +20,16 @@ namespace Comenzo.Items.Weapons.Ranged.LongBow
             Item.autoReuse = true; // The item can be used be holding down the mouse button
 
             Item.SetWeaponValues(12, 4, 4);
-            Item.DamageType = Ranged;
+            Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true; // This stops the use animation from doing melee damage
 
-            Item.shoot = ProjectileID.PurificaitonPowder; // What the weapon shoots like? For whatever reason PurificationPowder is the default in vinalla source 
             Item.shootSpeed = 5f; // The speed of the projectile based of pixels per frame
             Item.useAmmo = AmmoID.Arrow; // The corresponding type of ammo that the weapon uses. 
         }
 
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.LongBow)
+            Recipe.Create(ModContent.ItemType<LongBow>())
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();

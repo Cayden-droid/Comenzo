@@ -1,3 +1,7 @@
+using SecretsOfMana.Items.Placeable.Bars.MagmaBar;
+using SecretsOfMana.Items.Weapons.Melee.TheTrueDestroyer;
+using SecretsOfMana.Items.Weapons.Summon.Whip;
+using SecretsOfMana.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -18,7 +22,7 @@ using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 
-namespace Comenzo.NPCS.Friendlies
+namespace SecretsOfMana.NPCS.Friendlies
 {
     [AutoloadHead]
     public class Merchant : ModNPC
@@ -53,15 +57,15 @@ namespace Comenzo.NPCS.Friendlies
             NPCID.Sets.HatOffsetY[Type] = 4; // Spawns the party hat at a offset
             NPCID.Sets.ShimmerTownTransform[Type] = true; // Defines if the NPC has a shimmer form
 
-            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<MerchantEmote>();
+            // NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<MerchantEmote>(); Add emotes for merchant later
 
-            NPCID.Sets.NPCBesitaryDrawModifiers  drawModifiers = new NPCID.Sets.NPCBesitaryDrawModifiers()
+            NPCID.Sets.NPCBestiaryDrawModifiers  drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
-              Veloctiy = 1f,
+              Velocity = 1f,
               Direction = -1
             };
 
-            NPCID.Sets.NPCBesitaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 
             NPC.Happiness
                 .SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
@@ -73,9 +77,9 @@ namespace Comenzo.NPCS.Friendlies
                 .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Hate)
             ;
 
-            NPCProfile = Profiles.StackedNPCProfile(
+            NPCProfile = new Profiles.StackedNPCProfile(
                 new Profiles.DefaultNPCProfile(Texture, NPCHeadLoader.GetHeadSlot(HeadTexture), Texture + "_Party"),
-                new Profiles.DefaultNPCProfile(Texture, + "_Shimmer", ShimmerHeadIndex, Texture + "_Shimmer_Party")
+                new Profiles.DefaultNPCProfile(Texture + "_Shimmer", ShimmerHeadIndex, Texture + "_Shimmer_Party")
             );
 
             ContentSamples.NpcBestiaryRarityStars[Type] = 3;
@@ -113,17 +117,17 @@ namespace Comenzo.NPCS.Friendlies
 
             for (int k = 0; k < num; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<Sparkle>());
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silver);
             }
 
-            if (Main.netMode != NetModeID.Server && NPC.life <= 0)
+            if (Main.netMode != NetmodeID.Server && NPC.life <= 0)
             {
                 string variant = "";
                 if (NPC.IsShimmerVariant)
                     variant += "_Shimmer";
                 if (NPC.altTexture == 1) 
                     variant += "_Party";
-                int hatGore = NPCP.GetPartyHatGore();
+                int hatGore = NPC.GetPartyHatGore();
                 int headGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Head").Type;
                 int armGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Arm").Type;
                 int legGore = Mod.Find<ModGore>($"{Name}_Gore{variant}_Leg").Type;
@@ -133,38 +137,38 @@ namespace Comenzo.NPCS.Friendlies
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, hatGore);
                 }
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, headGore, 1f);
-                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.veloctiy, armGore);
-                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.veloctiy, armGore);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.velocity, armGore);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.velocity, armGore);
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
             }
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            if (source is EntitySource_SpawnNPC)
-            {
-                TownNPCRespawnSystem.unlockedExamplePersonSpawn = true;
-            }
-        }
+		// public override void OnSpawn(IEntitySource source) 
+        // {
+		// 	if (source is EntitySource_SpawnNPC) 
+        //     {
+		// 		TownNPCRespawnSystem.unlockedMerchantSpawn = true;
+		// 	}
+		// }
 
-        public override bool CanTownNPCSpawn(int numTownNPCs)
-        {
-            if (TownNPCRespawnSystem.unlockedExamplePersonSpawn)
-            {
-                return true; 
-            }
+        // public override bool CanTownNPCSpawn(int numTownNPCs) Not working :(
+        // {
+        //     if (TownNPCRespawnSystem.unlockedMerchantSpawn)
+        //     {
+        //         return true; 
+        //     }
 
-            foreach (var player in Main.ActivePlayers)
-            {
-                if (player.inventory.Any(item => item.type == ModContent.ItemType<>() || item.type == ModCotent.ItemType<Items.Placeable>()))
-                {
-                    return true;
-                }
-            }
+        //     foreach (var player in Main.ActivePlayers)
+        //     {
+        //         if (player.inventory.Any(item => item.type == ModContent.ItemType<MagmaBar>() || item.type == ModContent.ItemType<Whip>()))
+        //         {
+        //             return true;
+        //         }
+        //     }
 
-            return false;
-        }
+        //     return false;
+        // }
 
         public override ITownNPCProfile TownNPCProfile()
         {
@@ -187,25 +191,25 @@ namespace Comenzo.NPCS.Friendlies
             int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
             if (partyGirl >= 0 && Main.rand.NextBool(4))
             {
-                chat.Add(Language.GetTextValue("Mods.Comenzo.Dialouge.Merchant.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
+                chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialouge.Merchant.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
             }
 
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue1"));
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue2"));
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue3"));
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue4"));
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.CommonDialogue"), 5.0);
-            chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.RareDialogue"), 0.1);
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue1"));
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue3"));
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue4"));
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.CommonDialogue"), 5.0);
+            chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.RareDialogue"), 0.1);
 
             NumberOfTimesTalkedTo++; 
             if (NumberOfTimesTalkedTo >= 10)
             {
-                chat.Add(Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.TalkALot"));
+                chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.TalkALot"));
             }
 
             string chosenChat = chat; 
 
-            if (chosenChat == Language.GetTextValue("Mods.Comenzo.Dialogue.Merchant.StandardDialogue4"))
+            if (chosenChat == Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue4"))
             {
                 Main.npcChatCornerItem = ItemID.HiveBackpack;
             }
@@ -237,7 +241,7 @@ namespace Comenzo.NPCS.Friendlies
                     var entitySource = NPC.GetSource_GiftOrReward();
 
                     Main.LocalPlayer.inventory[hiveBackpackItemIndex].TurnToAir(); 
-                    Main.LocalPlayer.QuickSpawnItem(entitySource, ModContent.ItemType<WaspNest>());
+                    Main.LocalPlayer.QuickSpawnItem(entitySource, ModContent.ItemType<TheTrueDestroyer>());
 
                     return;
                 }
@@ -270,11 +274,6 @@ namespace Comenzo.NPCS.Friendlies
             }
         }
 
-        public override void ModifyNPCLoot()
-        {
-            npcLoot.Add(ItemDropRule.Common(ModCotent.ItemType<MagmaAnvil>()));
-        }
-
         public override bool CanGoToStatue(bool toKingStatue) => true;
 
         public override void OnGoToStatue(bool toKingStatue)
@@ -282,7 +281,7 @@ namespace Comenzo.NPCS.Friendlies
             if (Main.netMode == NetmodeID.Server)
             {
                 ModPacket packet = Mod.GetPacket();
-                packet.Write((byte)Comenzo.MessageType.TeleportToStatue);
+                // packet.Write((byte)SecretsOfMana.MessageType.TeleportToStatue); Fix later, 
                 packet.Write((byte)NPC.whoAmI);
                 packet.Send();
             }
@@ -304,10 +303,10 @@ namespace Comenzo.NPCS.Friendlies
 
                 else
                 {
-                    postion.Y = Math.Sign(position.Y) * 20;
+                    position.Y = Math.Sign(position.Y) * 20;
                 }
 
-                Dust.NewDustPerfect(NPC.Center + position, ModContent.DustType<Sparkle>(), Vector2.Zero).noGravity = true;
+                Dust.NewDustPerfect(NPC.Center + position, DustID.Silver, Vector2.Zero).noGravity = true;
             }
         }
 
@@ -319,7 +318,7 @@ namespace Comenzo.NPCS.Friendlies
 
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
         {
-            projType = ModContent.ProjectileType<SparklingBall>();
+            projType = ModContent.ProjectileType<MagmaArrow>();
             attackDelay = 1;
         }
 
@@ -329,14 +328,12 @@ namespace Comenzo.NPCS.Friendlies
             randomOffSet = 2f; 
         }
 
-        public override void LoadData(TagCompound tag)
-        {
-            NumberOfTimesTalkedTo = tag.GetInt("numberOfTimesTalkedTo");
-        }
+		public override void LoadData(TagCompound tag) {
+			NumberOfTimesTalkedTo = tag.GetInt("numberOfTimesTalkedTo");
+		}
 
-        public override void SaveData()
-        {
-            tag["numberOfTimesTalkedTo"] = NumberOfTimesTalkedTo;
-        }
+		public override void SaveData(TagCompound tag) {
+			tag["numberOfTimesTalkedTo"] = NumberOfTimesTalkedTo;
+		}
     }
 }

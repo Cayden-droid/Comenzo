@@ -3,9 +3,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
+using Terraria.Enums;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Magic.WoodenStaff
+namespace SecretsOfMana.Items.Weapons.Magic.WoodenStaff
 {
     public class WoodenStaff : ModItem
     {
@@ -22,7 +24,7 @@ namespace Comenzo.Items.Weapons.Magic.WoodenStaff
 
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.WoodenStaff) // A more advanced way to add a recipe, It assigns the recipe of the Item ID and allows chaining  
+            Recipe.Create(ModContent.ItemType<WoodenStaff>()) // A more advanced way to add a recipe, It assigns the recipe of the Item ID and allows chaining  
                 .AddIngredient(ItemID.DirtBlock, 10) // Chaining works be assigning all the values like ingredient or tile to Recipe.Create. 
                 .AddTile(TileID.WorkBenches) // This method allows creation of a recipe without having to assign each value individualy to recipe.
                 .Register();

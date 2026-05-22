@@ -1,7 +1,7 @@
 // using Terraria.ID;
 // using Terraria.ModLoader;
 
-// namespace Comenzo.Items
+// namespace SecretsOfMana.Items
 // {
 //     public class ItemTemplate : ModItem
 //     {

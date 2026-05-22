@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Melee.TheDestroyer
+namespace SecretsOfMana.Items.Weapons.Melee.TheDestroyer
 {
     public class TheDestoryer : ModItem
     {

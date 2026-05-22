@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Melee.MagmaSword
+namespace SecretsOfMana.Items.Weapons.Melee.MagmaSword
 {
 	public class MagmaSword : ModItem
     {
@@ -37,7 +37,7 @@ namespace Comenzo.Items.Weapons.Melee.MagmaSword
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemType<Items.Placeable.Bars.MagmaBar.MagmaBar>(), 18);
-            recipe.AddTile(TileType<Tiles.Anvils.MagmaAnvil.MagmaAnvil>());
+            recipe.AddTile(TileType<Tiles.MagmaAnvil.MagmaAnvil>());
             recipe.Register();
         }
 	}

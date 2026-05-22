@@ -3,9 +3,10 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Armor.Magma
+namespace SecretsOfMana.Items.Armor.Magma
 {
     [AutoloadEquip(EquipType.Legs)]
     public class MagmaGreaves : ModItem

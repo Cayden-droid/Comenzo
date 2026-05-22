@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Melee.WoodenPole
+namespace SecretsOfMana.Items.Weapons.Melee.WoodenPole
 {
     public class WoodenPole : ModItem
     {

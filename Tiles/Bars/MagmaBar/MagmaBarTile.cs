@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
+using Terraria.ObjectData;
 
-namespace Comenzo.Tiles.Bars.MagmaBar
+namespace SecretsOfMana.Tiles.Bars.MagmaBarTile
 {
-	public class MagmaBar : ModTile
+	public class MagmaBarTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -21,7 +21,7 @@ namespace Comenzo.Tiles.Bars.MagmaBar
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 
-			VanillaFallbackOnModDeletion = TileID.MetalBarss;
+			VanillaFallbackOnModDeletion = TileID.MetalBars;
 
 			AddMapEntry(new Color(200, 200, 200), Language.GetText("MapObject.MetalBar")); // localized text for "Metal Bar"
 		}

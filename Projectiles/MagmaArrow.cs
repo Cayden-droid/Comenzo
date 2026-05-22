@@ -3,15 +3,16 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Projectiles
+namespace SecretsOfMana.Projectiles
 {
     public class MagmaArrow : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.FiresFewerFromDaedalusStormbow[type] = true; // Fires fewer arrows for DaedalusStormbow for balancing based of the type of arrow
+            ProjectileID.Sets.FiresFewerFromDaedalusStormbow[Type] = true; // Fires fewer arrows for DaedalusStormbow for balancing based of the type of arrow
         }
 
         public override void SetDefaults()
@@ -33,14 +34,14 @@ namespace Comenzo.Projectiles
             if (Projectile.ai[0] >= 15f)
             {
                 Projectile.ai[0] = 15f;
-                Projectile.velocity += 0.1f;
+                Projectile.velocity.Y += 0.1f;
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // The projectile is rotated to face the direction of travel
 
             if (Projectile.velocity.Y > 16f)
             {
-                Projectile.velocity = 16f;
+                Projectile.velocity.Y = 16f;
             }
         }
 

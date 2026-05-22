@@ -1,3 +1,3 @@
-# Comenzo
-Terraria Comenzo Mod
+# SecretsOfMana
+Terraria SecretsOfMana Mod
 

@@ -1,11 +1,10 @@
-using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Acessories
+namespace SecretsOfMana.Items.Acessories
 {
     [AutoloadEquip(EquipType.Wings)]
     public class Wing : ModItem

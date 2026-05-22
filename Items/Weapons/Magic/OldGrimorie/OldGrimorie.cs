@@ -3,16 +3,18 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
+using Terraria.Enums;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Weapons.Magic.OldGrimorie
+namespace SecretsOfMana.Items.Weapons.Magic.OldGrimorie
 {
     public class OldGrimorie : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Old Grimorie");
-            Tooltip.SetDefault("A tattered old spell book");
+            // DisplayName.SetDefault("Old Grimorie");
+            // Tooltip.SetDefault("A tattered old spell book");
         }
         public override void SetDefaults()
         {
@@ -26,7 +28,7 @@ namespace Comenzo.Items.Weapons.Magic.OldGrimorie
 
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.OldGrimorie)
+            Recipe.Create(ModContent.ItemType<OldGrimorie>())
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();

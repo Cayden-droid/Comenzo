@@ -1,4 +1,4 @@
-displayName = Comenzo
+displayName = SecretsOfMana
 author = Cade and Nic
 version = 0.1
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*

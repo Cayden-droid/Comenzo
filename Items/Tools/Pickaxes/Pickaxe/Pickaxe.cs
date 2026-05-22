@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Comenzo.Items.Tools.Pickaxes.Pickaxe
+namespace SecretsOfMana.Items.Tools.Pickaxes.Pickaxe
 {
     public class Pickaxe : ModItem
     {

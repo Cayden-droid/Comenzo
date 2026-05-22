@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
+using Terraria.Audio;
 
-namespace Comenzo.Projectiles
+namespace SecretsOfMana.Projectiles
 {
 	public class TerraBeam : ModProjectile
 	{
@@ -24,13 +27,16 @@ namespace Comenzo.Projectiles
 			return true;
 		}
 
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			for (int i = 0; i < 5; i++) {
-				int a = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y - 16f, Main.rand.Next(-10, 11) * .25f, Main.rand.Next(-10, -5) * .25f, ProjectileID.Starfury, (int)(Projectile.damage * .5f), 0, Projectile.owner);
-				Main.projectile[a].aiStyle = 1;
-				Main.projectile[a].tileCollide = true;
-			}
-			return true;
-		}
+		public override void OnKill(int timeLeft)
+        {
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position); // Plays a sound when the projectile hits a block
+            for (int i = 0; i < 5; i++) // This conditonal function creates dust around where the projectile dies when hitting a block
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
+                dust.noGravity = true;
+                dust.velocity *= 1.5f;
+                dust.scale *= 0.9f;
+            }
+        }
 	}
 }
