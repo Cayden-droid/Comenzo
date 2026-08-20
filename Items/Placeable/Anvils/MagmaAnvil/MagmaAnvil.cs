@@ -27,7 +27,7 @@ namespace SecretsOfMana.Items.Placeable.Anvils.MagmaAnvil
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.value = 150;
-			Item.createTile = TileType<Tiles.MagmaAnvil.MagmaAnvil>();
+			Item.createTile = TileType<Tiles.CraftingStations.MagmaAnvil.MagmaAnvil>();
 		}
 
 		public override void AddRecipes() {

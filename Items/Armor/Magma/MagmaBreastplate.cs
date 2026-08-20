@@ -81,56 +81,11 @@ namespace SecretsOfMana.Items.Armor.Magma
             // item.prefix = 0;
             // item.questItem = false;
             Item.rare = ItemRarityID.Green; // 0;
-            // item.release = 0;
-            // item.reuseDelay = 0;
-            // item.scale = 1f;
-            // item.sentry = false;
-            // item.shoot = 0;
-            // item.shootSpeed = 0f;
-            // item.shopCustomPrice = null;
-            // item.shopSpecialCurrency = -1;
-            // item.stack = 1;
-            // item.tileBoost = -1;
-            // item.tileWand = 0;
-            // item.ToolTip = null;
-            // item.type = 0;
-            // item.uniqueStack = false;
-            // item.useAmmo = AmmoID.None;
-            // item.useAnimation = 100;
-            // item.UseSound = null;
-            // item.useStyle = 0; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
-            // item.useTime = 100; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
-            // item.useTurn = false; // ** Whether the player can turn around while the using animation is happening.
-            Item.value = 10000; // 0;
-                                // item.vanity = false;
-                                // item.wet = false;
-                                // item.wetCount = 0;
-
-
-
+            Item.value = 10000; 
+            
             // ** Size */
             Item.height = 18; // 0;
             Item.width = 18; // 0;
-
-
-            // ** Damage Type */
-            // item.melee = false;
-            // item.magic = false;
-            // item.ranged = false;
-            // item.thrown = false;
-            // item.summon = false;
-
-
-            // ** Tool Power */
-            // item.axe = 0;
-            // item.pick = 0;
-            // item.hammer = 0;
-
-
-            // ** Fishing Power */
-            // item.bait = 0;
-            // item.fishingPole = 0;
-
 
             // ** Assigned Slot */
             // item.backSlot = -1;
@@ -148,13 +103,6 @@ namespace SecretsOfMana.Items.Armor.Magma
             // item.waistSlot = -1;
             // item.wingSlot = -1;
 
-
-            // ** Static Fields */
-            // item.staff = false;
-
-            // ** tModLoader Only */
-            // item.modItem = null;
-            // item.globalItems = new GlobalItem[0];
         }
 
         public override void UpdateEquip(Player player)

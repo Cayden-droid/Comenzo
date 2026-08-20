@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SecretsOfMana.Tiles.MagmaAnvil
+namespace SecretsOfMana.Tiles.CraftingStations.MagmaAnvil
 {
 	public class MagmaAnvil : ModTile
 	{

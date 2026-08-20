@@ -37,7 +37,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.MagmaSword
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemType<Items.Placeable.Bars.MagmaBar.MagmaBar>(), 18);
-            recipe.AddTile(TileType<Tiles.MagmaAnvil.MagmaAnvil>());
+            recipe.AddTile(TileType<Tiles.CraftingStations.MagmaAnvil.MagmaAnvil>());
             recipe.Register();
         }
 	}
