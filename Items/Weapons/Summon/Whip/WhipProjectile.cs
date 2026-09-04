@@ -1,9 +1,11 @@
-using SecretsOfMana.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,9 +22,78 @@ namespace SecretsOfMana.Items.Weapons.Summon.Whip
         {
             Projectile.DefaultToWhip(); // Sets whip properties 
 
-            // Projectile.WhipSettings.Segments = 20; Is vanilla default
-            // Projectile.WhipSettings.RangeMultiplier = 1f; Is vanilla default
+            Projectile.width = 18;
+			Projectile.height = 18;
+			Projectile.friendly = true;
+			Projectile.drawLayer = ProjectileDrawLayerID.HeldProj;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ownerHitCheck = true; // This prevents the projectile from hitting through solid tiles.
+			Projectile.extraUpdates = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.DamageType = DamageClass.SummonMeleeSpeed;
+			Projectile.WhipSettings.Segments = 20;
         }
+
+        private float Timer
+        {
+            get => Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
+        public override void AI()
+        {
+            Player owner = Main.player[Projectile.owner];
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // PiOver2 helps it be created at the right position without it, it is off by 90 degrees counterclockwise
+
+            Projectile.Center = Main.GetPlayerArmPosition(Projectile, owner) + Projectile.velocity * Timer;
+            Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
+            // UnitX is used here to check if the projectile's velocity is above or equal to zero on the x axis
+
+            Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out _, out_);
+            if (Timer >= timeToFlyOut || owner.itemAnimation <= 0)
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            owner.heldProj = Projectile.whoAmI;
+            owner.MatchItemTimeToItemAnimation();
+            if (Timer == timeToFlyOut / 2)
+            {
+                List<Vector2> points = Projectile.WhipPointsForCollision;
+                Projectile.FillWhipControlPoints(Projectile, points);
+                SoundEngine.PlaySound(SoundID.Item153, points[points.Count - 1]);
+            }
+
+            float swingProgress = Timer / swingTime;
+
+            // This conditional statement creates dust along the whip path during the swing
+            if (Utils.GetLerpValue(0.1f, 0.7f, swingProgress, clamped: true) * Utils.GetLerpValue(0.9f, 0.7f, swingProgress, clamped: true) > 0.5f && !Main.rand.NextBool(3))
+            {
+                List<Vector2> points = Projectile.WhipPointsForCollision;
+                points.Clear();
+                Projectile.FillWhipControlPoints(Projectile, points);
+                int pointIndex = Main.rand.Next(points.Count - 10, point.Count);
+                Rectangle spawnArea = Utils.CenteredRectangle(points[pointIndex], new Vector2(30f, 30f));
+                int dustType = DustID.Enchanted_Gold;
+                if (Main.rand.NextBool(3))
+                    dustType = DustID.TintableDustLighted;
+                // This section is repsosible for randomly selecting a segment, and defining the dust; preparing it for creation
+                
+                // Spawns teh dust based of the spawn area
+                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 100, Color.white);
+                dust.position = points[pointIndex];
+                dust.fadeIn = 0.3f;
+                Vector2 spinningPoint = points[pointIndex] - points[pointIndex - 1];
+                dust.NoGravity = true;
+                dust.velocity *= 0.5f;
+                // This segment causes the dust to spawn with a velocity perpendicular, to the whip segments. This gives the impression of sparks flying off
+                dust.velocity += spinngingPoint.RotatedBy(owner.direction * ((float)Math.PI / 2f));
+                dust.velocity *= 0.5f;
+            }
+        }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
