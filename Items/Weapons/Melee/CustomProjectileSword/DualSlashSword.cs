@@ -5,9 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace SecretsOfMana.Items.Weapons.Melee.CustomProjectileSword
+namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 {
-    public class CustomProjectileSword : ModItem
+    public class DualSlashSword : ModItem
     {
         public override void SetDefaults()
         {
@@ -23,7 +23,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.CustomProjectileSword
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.buyPrice(gold: 25);
             Item.DamageType = DamageClass.Melee;
-            Item.shoot = ModCotent.ProjectileType<CustomProjectileSwordProjectile>();
+            Item.shoot = ModCotent.ProjectileType<DualSlashSwordProjectile>();
             Item.noMelee = true;
             Item.shootsEveryUse = true;
             Item.autoReuse = true;   

@@ -1,14 +1,13 @@
 using Microsoft.Xna.Framework;
-using SecretsOfMana.Items.Armor.Magma;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace SecretsOfMana.Items.Weapons.Melee.CustomProjectileSword
+namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 {
-    public class CustomProjectileSwordProjectile : ModProjectile
+    public class DualSlashSwordProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
         {
