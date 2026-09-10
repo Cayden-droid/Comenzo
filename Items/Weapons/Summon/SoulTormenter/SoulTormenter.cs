@@ -8,14 +8,14 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
-namespace SecretsOfMana.Items.Weapons.Summon.Whip
+namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 {
-    public class Whip : ModItem
+    public class SoulTormenter : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(WhipDebuff.TagDamage);
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<WhipProjectile>(), 20, 2, 4);
+            Item.DefaultToWhip(ModContent.ProjectileType<SoulTormenterProjectile>(), 20, 2, 4);
             Item.rare = ItemRarityID.Green; 
         }
 

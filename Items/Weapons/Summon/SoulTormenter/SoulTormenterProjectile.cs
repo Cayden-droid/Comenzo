@@ -9,9 +9,9 @@ using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SecretsOfMana.Items.Weapons.Summon.Whip
+namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 {
-    public class WhipProjectile : ModProjectile
+    public class SoulTormenterProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
         {
