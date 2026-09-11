@@ -1,4 +1,3 @@
-using SecretsOfMana.Items.Weapons.Summon.Whip;
 using SecretsOfMana.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;

@@ -29,7 +29,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             Item.autoReuse = true;   
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_With source, Vector2 position, Vector2 velcoity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velcoity, int type, int damage, float knockback)
         {
             Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
             float cellingLimit = target.Y;

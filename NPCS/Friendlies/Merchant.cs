@@ -1,6 +1,6 @@
 using SecretsOfMana.Items.Placeable.Bars.MagmaBar;
 using SecretsOfMana.Items.Weapons.Melee.TheTrueDestroyer;
-using SecretsOfMana.Items.Weapons.Summon.Whip;
+using SecretsOfMana.Items.Weapons.Summon.SoulTormenter;
 using SecretsOfMana.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
