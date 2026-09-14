@@ -29,8 +29,52 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             Item.autoReuse = true;   
         }
 
+        // When read, tells the server that this weapon has a alternative function. In this case reading a right click input
+        public override bool AltFunction(Player player)
+        {
+            return true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2) // this defines what happens when a right click is inputed
+            {
+                Item.UseTime = 120; 
+                Item.useAnimation = 120;
+                Item.damage = 2500;
+                Item.width = 40;
+                Item.height = 160;
+            }
+
+            else
+            {
+                Item.useTime = 20;
+                Item.useAnimation = 20;
+                Item.damage = 375;
+            }
+
+            return base.CanUseItem(player);
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velcoity, int type, int damage, float knockback)
         {
+
+            if (player.altFunctionUse == 2)
+            {
+
+                Vector2 position = new Vector2(player.Center.X, player.Center.Y);
+
+                Vector2 heading = (target - position).SafeNormalize(Vector2.UnitX); // the variable heading helps find figure out the distance to target, and calculate the velocity
+                heading *= velcoity.Length(); // Calculates the final velocity based of the distance to target
+
+                for (int i = 0; i <= 120; i++)
+                {
+                    Player.GetModPlayer<ManaDrain>().hasManaDrainDebuff = true; // Applies the mana drain debuff
+                }
+
+                Projectile.NewProjectile(source, position, heading, type, damage * 2, knockback, player.whoAmI, 0f);
+            }
+        
             Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
             float cellingLimit = target.Y;
             if (cellingLimit > player.Center.Y - 200f)
@@ -56,8 +100,6 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                     heading.Y = 20f;
                 }
 
-                heading.Normalize();
-                heading *= velcoity.Length();
                 heading.Y += Main.rand.Next(-40, 41) * 0.02f;
 
                 Projectile.NewProjectile(source, position, heading, type, damage *2, knockback, player.whoAmI, 0f, cellingLimit);
