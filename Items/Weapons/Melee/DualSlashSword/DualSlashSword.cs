@@ -9,6 +9,12 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 {
     public class DualSlashSword : ModItem
     {
+        private int tickCounter = 0;
+
+        public override void UpdateInventory(Player player)
+        {
+            tickCounter++;
+        }
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
@@ -23,7 +29,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.buyPrice(gold: 25);
             Item.DamageType = DamageClass.Melee;
-            Item.shoot = ModCotent.ProjectileType<DualSlashSwordProjectile>();
+            Item.shoot = ModContent.ProjectileType<DualSlashSwordProjectile>();
             Item.noMelee = true;
             Item.shootsEveryUse = true;
             Item.autoReuse = true;   
@@ -39,11 +45,13 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
         {
             if (player.altFunctionUse == 2) // this defines what happens when a right click is inputed
             {
-                Item.UseTime = 120; 
+                Item.useTime = 120; 
                 Item.useAnimation = 120;
                 Item.damage = 2500;
                 Item.width = 40;
-                Item.height = 160;
+                Item.height = 80;
+                Item.shoot = ModContent.ProjectileType<DualSlashSwordProjectileAlt>();
+
             }
 
             else
@@ -51,6 +59,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                 Item.useTime = 20;
                 Item.useAnimation = 20;
                 Item.damage = 375;
+                Item.shoot = ModContent.ProjectileType<DualSlashSwordProjectile>();
             }
 
             return base.CanUseItem(player);
@@ -61,18 +70,18 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 
             if (player.altFunctionUse == 2)
             {
+                tickCounter = 0;
 
                 Vector2 position = new Vector2(player.Center.X, player.Center.Y);
 
                 Vector2 heading = (target - position).SafeNormalize(Vector2.UnitX); // the variable heading helps find figure out the distance to target, and calculate the velocity
                 heading *= velcoity.Length(); // Calculates the final velocity based of the distance to target
 
-                for (int i = 0; i <= 120; i++)
-                {
-                    Player.GetModPlayer<ManaDrain>().hasManaDrainDebuff = true; // Applies the mana drain debuff
-                }
+                player.GetModPlayer<ManaDrain>().hasManaDrainDebuff = true; // Applies the mana drain debuff
 
                 Projectile.NewProjectile(source, position, heading, type, damage * 2, knockback, player.whoAmI, 0f);
+
+                return false; // Stops the left click function from beign exectued
             }
         
             Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
@@ -87,7 +96,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 
                 position = player.Center - new Vector2(Main.rand.NextFloat(401) * player.direction, 600f);
                 position.Y -= 100 * i;
-                Vector2 spawnPosition = player.Center - new Vector2(position, position.y);
+                Vector2 spawnPosition = player.Center - new Vector2(position, position.Y);
                 Vector2 heading = target - spawnPosition;
 
                 if (heading.Y < 0f)
