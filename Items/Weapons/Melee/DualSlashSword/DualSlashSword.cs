@@ -78,10 +78,11 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                 heading *= velcoity.Length(); // Calculates the final velocity based of the distance to target
 
                 player.GetModPlayer<ManaDrain>().hasManaDrainDebuff = true; // Applies the mana drain debuff
+                ManaDrain.UpdateBadEffects();
 
                 Projectile.NewProjectile(source, position, heading, type, damage * 2, knockback, player.whoAmI, 0f);
 
-                return false; // Stops the left click function from beign exectued
+                return false; // Stops the right click function from beign exectued
             }
         
             Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
@@ -91,7 +92,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                 cellingLimit = player.Center.Y - 200f;
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 1; i < 4; i++)
             {
 
                 position = player.Center - new Vector2(Main.rand.NextFloat(401) * player.direction, 600f);
@@ -111,7 +112,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
 
                 heading.Y += Main.rand.Next(-40, 41) * 0.02f;
 
-                Projectile.NewProjectile(source, position, heading, type, damage *2, knockback, player.whoAmI, 0f, cellingLimit);
+                Projectile.NewProjectile(source, position, heading, type, damage * (i / 4), knockback, player.whoAmI, 0f, cellingLimit);
 
                 // This section of code is for mirroring the x positon of the projectile
                 // Flips position relative to player.Center
@@ -119,7 +120,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                 // Heading x and y dictate the direction the projectile travels. -heading.x makes it travel in the oppostie direction of the other projectile.
                 Vector2 mirroredHeading = new Vector2(-heading.X, heading.Y);
 
-                Projectile.NewProjectile(source, mirroredPosition, mirroredHeading, type, damage * 2, knockback, player.whoAmI, 0f, cellingLimit);
+                Projectile.NewProjectile(source, mirroredPosition, mirroredHeading, type, damage * (i / 4), knockback, player.whoAmI, 0f, cellingLimit);
             }
 
             return false;
