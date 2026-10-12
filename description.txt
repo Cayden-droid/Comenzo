@@ -1,1 +1,2 @@
-SecretsOfMana  is a test becauase we're makeing a game of of this code after we're done
+SecretsOfMana
+Venture into the deepest secrets Terraria has to offer...

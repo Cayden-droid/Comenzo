@@ -5,11 +5,22 @@ using Terraria.ModLoader;
 
 namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
 {
+    
     public class RelfectionStaffMirror : ModProjectile
     {
+        int whichMirrorAmI;
+        public RelfectionStaffMirror(int i)
+        {
+            whichMirrorAmI = i;
+        }
+
+        public int getMirror()
+        {
+            return whichMirrorAmI;
+        }
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Types] = 0;
+            Main.projFrames[Type] = 0;
         }
         public override void SetDefaults()
         {
@@ -20,7 +31,7 @@ namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.noEnchantmentVisuals = true;
-            boolean ProjectileExists = true;
+            bool ProjectileExists = true;
         }
 
         public override void AI()
@@ -41,8 +52,8 @@ namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
 
         private void ReflectProjectile(Projectile proj)
         {
-            proj.velcoity.X *= -1f;
-            proj.position += proj.velcoity;
+            proj.velocity.X *= -1f;
+            proj.position += proj.velocity;
 
             Terraria.Audio.SoundEngine.PlaySound(SoundID.Item150, Projectile.position);
             Projectile.Kill();

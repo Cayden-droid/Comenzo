@@ -13,7 +13,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Types] = 4;
+            Main.projFrames[Type] = 4;
         }
 
         public override void SetDefaults()
@@ -30,7 +30,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
             Projectile.usesOwnerMeleeHitCD = true;
-            Projectile.stopDealingDamageAfterPenetrateHits = true;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
 
             Projectile.aiStyle = -1;
 

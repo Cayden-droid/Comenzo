@@ -13,7 +13,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Types] = 4;
+            Main.projFrames[Type] = 4;
         }
 
         public override void SetDefaults()
@@ -30,7 +30,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
             Projectile.usesOwnerMeleeHitCD = true;
-            Projectile.stopDealingDamageAfterPenetrateHits = true;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
 
             Projectile.aiStyle = -1;
 
@@ -51,7 +51,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             
             float dustRotation = Main.rand.NextFloatDirection() * MathHelper.PiOver2 * 0.7f;
             Vector2 dustPosition = Projectile.Center + dustRotation.ToRotationVector2() * 84f * Projectile.scale;
-            Vector2 duseVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver(2)).ToRotationVector2();
+            Vector2 duseVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver2).ToRotationVector2();
 
             if (Projectile.localAI[0] >= Projectile.ai[1])
             {

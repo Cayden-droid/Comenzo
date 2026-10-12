@@ -36,7 +36,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
         }
 
         // When read, tells the server that this weapon has a alternative function. In this case reading a right click input
-        public override bool AltFunction(Player player)
+        public bool AltFunction(Player player)
         {
             return true;
         }
@@ -65,7 +65,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velcoity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 
             if (player.altFunctionUse == 2)
@@ -75,7 +75,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
                 Vector2 position = new Vector2(player.Center.X, player.Center.Y);
 
                 Vector2 heading = (target - position).SafeNormalize(Vector2.UnitX); // the variable heading helps find figure out the distance to target, and calculate the velocity
-                heading *= velcoity.Length(); // Calculates the final velocity based of the distance to target
+                heading *= velocity.Length(); // Calculates the final velocity based of the distance to target
 
                 player.GetModPlayer<ManaDrain>().hasManaDrainDebuff = true; // Applies the mana drain debuff
                 ManaDrain.UpdateBadEffects();

@@ -11,12 +11,12 @@ namespace SecretsOfMana
     {
         public bool hasManaDrainDebuff = false;
 
-        public override void ResetEffects()
+        public void ResetEffects()
         {
             hasManaDrainDebuff = false;
         }
 
-        public override void UpdateBadEffects()
+        public void UpdateBadEffects()
         {
             if (hasManaDrainDebuff)
             {

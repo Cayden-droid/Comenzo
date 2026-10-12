@@ -20,8 +20,6 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 
         public override void SetDefaults()
         {
-            Projectile.DefaultToWhip(); // Sets whip properties 
-
             Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.friendly = true;
@@ -122,6 +120,13 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 
                 pos += diff;
             }
+        }
+
+        public override bool PreDraw(ref Color lightColor) {
+			List<Vector2> list = new List<Vector2>();
+			Projectile.FillWhipControlPoints(Projectile, list, player);
+
+			DrawLine(list);
         }
     }
 }
