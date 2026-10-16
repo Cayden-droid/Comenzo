@@ -9,6 +9,9 @@ namespace SecretsOfMana.Items.Weapons.Ranger.LongBow
 {
     public class LongBow : ModItem
     {
+        // Placeholder sprite until LongBow.png exists
+        public override string Texture => "Terraria/Images/Item_" + ItemID.WoodenBow;
+
         public override void SetDefaults() // How a bow functions is very similar to a gun 
         {
             Item.width = 32;
@@ -23,6 +26,7 @@ namespace SecretsOfMana.Items.Weapons.Ranger.LongBow
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true; // This stops the use animation from doing melee damage
 
+            Item.shoot = ProjectileID.WoodenArrowFriendly; // Required for the bow to fire; the equipped arrow ammo replaces it
             Item.shootSpeed = 5f; // The speed of the projectile based of pixels per frame
             Item.useAmmo = AmmoID.Arrow; // The corresponding type of ammo that the weapon uses. 
         }

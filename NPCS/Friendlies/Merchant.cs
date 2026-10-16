@@ -24,6 +24,10 @@ using Terraria.Utilities;
 
 namespace SecretsOfMana.NPCS.Friendlies
 {
+    // Not loaded until its sprites exist: Merchant.png, Merchant_Head.png, Merchant_Party.png,
+    // Merchant_Shimmer.png, Merchant_Shimmer_Head.png, Merchant_Shimmer_Party.png, and the
+    // Merchant_Gore_* gores that HitEffect looks up. Remove [Autoload(false)] once they are added.
+    [Autoload(false)]
     [AutoloadHead]
     public class Merchant : ModNPC
     {
@@ -191,7 +195,7 @@ namespace SecretsOfMana.NPCS.Friendlies
             int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
             if (partyGirl >= 0 && Main.rand.NextBool(4))
             {
-                chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialouge.Merchant.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
+                chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
             }
 
             chat.Add(Language.GetTextValue("Mods.SecretsOfMana.Dialogue.Merchant.StandardDialogue1"));

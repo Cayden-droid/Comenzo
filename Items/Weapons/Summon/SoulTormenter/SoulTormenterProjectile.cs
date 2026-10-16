@@ -1,3 +1,4 @@
+using SecretsOfMana.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -23,7 +24,6 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
             Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.friendly = true;
-			Projectile.drawLayer = ProjectileDrawLayerID.HeldProj;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true; // This prevents the projectile from hitting through solid tiles.
@@ -44,11 +44,13 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // PiOver2 helps it be created at the right position without it, it is off by 90 degrees counterclockwise
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile, owner) + Projectile.velocity * Timer;
+            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * Timer;
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
             // UnitX is used here to check if the projectile's velocity is above or equal to zero on the x axis
 
-            Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out _, out_);
+            Timer++;
+
+            Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out _, out _);
             if (Timer >= timeToFlyOut || owner.itemAnimation <= 0)
             {
                 Projectile.Kill();
@@ -64,7 +66,7 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
                 SoundEngine.PlaySound(SoundID.Item153, points[points.Count - 1]);
             }
 
-            float swingProgress = Timer / swingTime;
+            float swingProgress = Timer / timeToFlyOut;
 
             // This conditional statement creates dust along the whip path during the swing
             if (Utils.GetLerpValue(0.1f, 0.7f, swingProgress, clamped: true) * Utils.GetLerpValue(0.9f, 0.7f, swingProgress, clamped: true) > 0.5f && !Main.rand.NextBool(3))
@@ -72,7 +74,7 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
                 List<Vector2> points = Projectile.WhipPointsForCollision;
                 points.Clear();
                 Projectile.FillWhipControlPoints(Projectile, points);
-                int pointIndex = Main.rand.Next(points.Count - 10, point.Count);
+                int pointIndex = Main.rand.Next(points.Count - 10, points.Count);
                 Rectangle spawnArea = Utils.CenteredRectangle(points[pointIndex], new Vector2(30f, 30f));
                 int dustType = DustID.Enchanted_Gold;
                 if (Main.rand.NextBool(3))
@@ -80,14 +82,14 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
                 // This section is repsosible for randomly selecting a segment, and defining the dust; preparing it for creation
                 
                 // Spawns teh dust based of the spawn area
-                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 100, Color.white);
+                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 100, Color.White);
                 dust.position = points[pointIndex];
                 dust.fadeIn = 0.3f;
                 Vector2 spinningPoint = points[pointIndex] - points[pointIndex - 1];
-                dust.NoGravity = true;
+                dust.noGravity = true;
                 dust.velocity *= 0.5f;
                 // This segment causes the dust to spawn with a velocity perpendicular, to the whip segments. This gives the impression of sparks flying off
-                dust.velocity += spinngingPoint.RotatedBy(owner.direction * ((float)Math.PI / 2f));
+                dust.velocity += spinningPoint.RotatedBy(owner.direction * ((float)Math.PI / 2f));
                 dust.velocity *= 0.5f;
             }
         }
@@ -124,9 +126,59 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 
         public override bool PreDraw(ref Color lightColor) {
 			List<Vector2> list = new List<Vector2>();
-			Projectile.FillWhipControlPoints(Projectile, list, player);
+			Projectile.FillWhipControlPoints(Projectile, list);
 
 			DrawLine(list);
+
+			SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 pos = list[0];
+
+			// Draws each whip segment from the sprite sheet: handle, three segment styles, then the tip
+			for (int i = 0; i < list.Count - 1; i++)
+			{
+				Rectangle frame = new Rectangle(0, 0, 10, 26); // The handle
+				Vector2 origin = new Vector2(5, 8); // Where the player's hand holds the handle
+				float scale = 1;
+
+				if (i == list.Count - 2)
+				{
+					// The tip, scaled up when fully extended and down when curled up
+					frame.Y = 74;
+					frame.Height = 18;
+
+					Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out int _, out float _);
+					float t = Timer / timeToFlyOut;
+					scale = MathHelper.Lerp(0.5f, 1.5f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
+				}
+				else if (i > 10)
+				{
+					frame.Y = 58;
+					frame.Height = 16;
+				}
+				else if (i > 5)
+				{
+					frame.Y = 42;
+					frame.Height = 16;
+				}
+				else if (i > 0)
+				{
+					frame.Y = 26;
+					frame.Height = 16;
+				}
+
+				Vector2 element = list[i];
+				Vector2 diff = list[i + 1] - element;
+
+				float rotation = diff.ToRotation() - MathHelper.PiOver2; // The sprite faces down, so PiOver2 corrects the rotation
+				Color color = Lighting.GetColor(element.ToTileCoordinates());
+
+				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, flip, 0);
+
+				pos += diff;
+			}
+
+			return false;
         }
     }
 }

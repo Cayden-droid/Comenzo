@@ -12,6 +12,9 @@ namespace SecretsOfMana.Buffs
     {
         public static readonly int TagDamage = 5;
 
+        // Placeholder icon until Buffs/WhipDebuff.png exists
+        public override string Texture => "Terraria/Images/Buff_" + BuffID.Weak;
+
         public override void SetStaticDefaults()
         {
             // This allows the debuff to be applied to all NPCs, including NPCs immune to most or all other debuffs

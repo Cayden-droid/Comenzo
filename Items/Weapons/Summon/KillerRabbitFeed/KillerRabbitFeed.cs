@@ -1,5 +1,3 @@
-using ExampleMod.Content.Items;
-using ExampleMod.Content.Tiles.Furniture;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -9,12 +7,14 @@ using Terraria.ModLoader;
 
 namespace SecretsOfMana.Items.Weapons.Summon.KillerRabbitFeed
 {
+    // Not loaded until it has a sprite (KillerRabbitFeed.png) and a working minion
+    [Autoload(false)]
     public class KillerRabbitFeed : ModItem
     {
-        public override SetStaticDefaults()
+        public override void SetStaticDefaults()
         {
             ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
-            ItemID.Sets.LockOnIgnoresCollsion[Type] = true;
+            ItemID.Sets.LockOnIgnoresCollision[Type] = true;
 
             ItemID.Sets.StaffMinionSlotsRequired[Type] = 1f;
         }
@@ -27,7 +27,7 @@ namespace SecretsOfMana.Items.Weapons.Summon.KillerRabbitFeed
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
-            Item.useAnimaiton = 36;
+            Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.sellPrice(gold: 30);
             Item.rare = ItemRarityID.Cyan;

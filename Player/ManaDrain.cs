@@ -11,21 +11,23 @@ namespace SecretsOfMana
     {
         public bool hasManaDrainDebuff = false;
 
-        public void ResetEffects()
+        public override void ResetEffects()
         {
             hasManaDrainDebuff = false;
         }
 
-        public void UpdateBadEffects()
+        public override void PostUpdateMiscEffects()
         {
-            if (hasManaDrainDebuff)
+            if (!hasManaDrainDebuff)
             {
-                // This stops normal mana regen. 
-                Player.manaRegenDelay = 60;
-                Player.manaRegen = 0;
+                return;
             }
-            
-            // Every ten ticks, and when the player's mana is greater than zero, reducess the players mana. 
+
+            // This stops normal mana regen.
+            Player.manaRegenDelay = 60;
+            Player.manaRegen = 0;
+
+            // Every ten ticks, and when the player's mana is greater than zero, reducess the players mana.
             if (Main.GameUpdateCount % 10 == 0 && Player.statMana > 0)
             {
                 Player.statMana -= 1;

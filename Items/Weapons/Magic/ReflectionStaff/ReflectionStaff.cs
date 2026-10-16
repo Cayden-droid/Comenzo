@@ -9,40 +9,39 @@ namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
 {
     public class ReflectionStaff : ModItem
     {
-        private readonly int[] mirrorIndices = new int[6] {-1, -1, -1, -1, -1, -1};
+        private const int MirrorCount = 6;
 
-        public RelfectionStaffMirror mirror;
+        // Projectile indices (into Main.projectile) of the mirrors this staff spawned, -1 when empty
+        private readonly int[] mirrorIndices = new int[MirrorCount] {-1, -1, -1, -1, -1, -1};
 
         public override void HoldItem(Player player)
         {
-            int mirrorType = ModContent.ProjectileType<RelfectionStaffMirror>();
+            // Only the owning client spawns projectiles; they are synced to everyone else
+            if (player.whoAmI != Main.myPlayer)
+                return;
 
-            bool mirrorExists;
+            int mirrorType = ModContent.ProjectileType<ReflectionStaffMirror>();
+
+            // Spawn a mirror at a random spot around the player for every slot that has none
             for (int i = 0; i < mirrorIndices.Length; i++)
             {
-                int index = mirrorIndices[i];
+                if (MirrorExists(mirrorIndices[i], mirrorType, player))
+                    continue;
 
-                mirrorExists = index >= 0
-                    && Main.projectile[index].active
-                    && Main.projectile[index].type == mirrorType
-                    && Main.projectile[index].owner == player.whoAmI;
-            }
-
-            int mirrorNumber;
-            if (!mirrorExists)
-            {
                 float randomX = Main.rand.NextFloat(-301f, 301f);
                 float randomY = Main.rand.NextFloat(-201f, 201f);
                 Vector2 spawnPosition = player.Center + new Vector2(randomX, randomY);
 
-                for (int i = 0; i < 6; i++)
-                {
-                    mirror = new RelfectionStaffMirror(mirrorIndices[i]);
-                    mirrorNumber = mirror.getMirror();
-
-                    mirrorNumber = Projectile.NewProjectile(player.GetSource_ItemUse(Item), spawnPosition, 0, mirrorType, 0, 0f, player.whoAmI); 
-                } 
+                mirrorIndices[i] = Projectile.NewProjectile(player.GetSource_ItemUse(Item), spawnPosition, Vector2.Zero, mirrorType, 0, 0f, player.whoAmI);
             }
+        }
+
+        private static bool MirrorExists(int index, int mirrorType, Player player)
+        {
+            return index >= 0
+                && Main.projectile[index].active
+                && Main.projectile[index].type == mirrorType
+                && Main.projectile[index].owner == player.whoAmI;
         }
 
         public override void SetDefaults()
@@ -59,37 +58,30 @@ namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
             Item.value = Item.buyPrice(gold: 75);
             Item.DamageType = DamageClass.Magic;
             Item.shoot = ModContent.ProjectileType<ReflectionStaffProjectile>();
+            Item.shootSpeed = 10f;
             Item.noMelee = true;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            int mirrorID = mirrorIndices[1];
-            Vector2 position;
-            Vector2 target;
-            Vector2 heading;
-                           
-            while (mirrorID >= 0 && Main.projectile[mirrorID].active)
+            int mirrorType = ModContent.ProjectileType<ReflectionStaffMirror>();
+            bool firedAtMirror = false;
+
+            // Fire one projectile at each living mirror
+            for (int i = 0; i < mirrorIndices.Length; i++)
             {
-                position = new Vector2(player.Center.X, player.Center.Y);
-                target = Main.projectile[mirrorID].Center;
+                int mirrorID = mirrorIndices[i];
+                if (!MirrorExists(mirrorID, mirrorType, player))
+                    continue;
 
-                heading = (target - position).SafeNormalize(Vector2.UnitX);
-                heading *= velcoity.Length();
-                Projectile.NewProjectile(source, position, heading, type, damage, knockback);
-                mirror.AI();
-                mirrorID++;
-
-                if (mirrorID => 6)
-                {
-                    mirrorID = 0;
-                }
+                Vector2 heading = (Main.projectile[mirrorID].Center - player.Center).SafeNormalize(Vector2.UnitX);
+                heading *= velocity.Length();
+                Projectile.NewProjectile(source, player.Center, heading, type, damage, knockback, player.whoAmI);
+                firedAtMirror = true;
             }
 
-            if (mirrorID < 0 && !Main.projectile[mirrorID].active)
-            {
-                return null;
-            }
+            // With no mirrors out, fire normally toward the cursor
+            return !firedAtMirror;
         }
     }
 }

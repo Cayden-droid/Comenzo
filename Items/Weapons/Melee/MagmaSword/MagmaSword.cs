@@ -21,6 +21,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.MagmaSword
             Item.height = 48;
             Item.DamageType = DamageClass.Melee;
             Item.UseSound = SoundID.Item1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.SetWeaponValues(127, 5, 6);
             Item.useAnimation = 35;
             Item.useTime = 35;
