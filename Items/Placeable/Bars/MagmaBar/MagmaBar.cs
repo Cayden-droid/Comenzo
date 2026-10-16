@@ -1,4 +1,4 @@
-﻿using SecretsOfMana.Tiles.Bars.MagmaBarTile;
+﻿using SecretsOfMana.Tiles.Bars.MagmaBar;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

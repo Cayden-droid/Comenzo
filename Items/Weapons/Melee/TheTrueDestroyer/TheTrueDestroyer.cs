@@ -29,7 +29,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.TheTrueDestroyer
             Item.damage = 3000;
             Item.questItem = true;
             Item.useAnimation = 5;
-            Item.useStyle = 1; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
+            Item.useStyle = ItemUseStyleID.Swing; // ** The use style of your item: 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns */
             Item.useTime = 5; // ** The time span of using the item in frames. Blocks use 10. Default value is 100. Weapons usually have equal useAnimation and useTime, unequal values for these two results in multiple attacks per click.
             Item.height = 20;
             Item.width = 20;

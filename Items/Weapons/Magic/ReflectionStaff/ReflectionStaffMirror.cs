@@ -5,22 +5,12 @@ using Terraria.ModLoader;
 
 namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
 {
-    
-    public class RelfectionStaffMirror : ModProjectile
-    {
-        int whichMirrorAmI;
-        public RelfectionStaffMirror(int i)
-        {
-            whichMirrorAmI = i;
-        }
 
-        public int getMirror()
-        {
-            return whichMirrorAmI;
-        }
+    public class ReflectionStaffMirror : ModProjectile
+    {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 0;
+            Main.projFrames[Type] = 1;
         }
         public override void SetDefaults()
         {
@@ -31,7 +21,6 @@ namespace SecretsOfMana.Items.Weapons.Magic.ReflectionStaff
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.noEnchantmentVisuals = true;
-            bool ProjectileExists = true;
         }
 
         public override void AI()

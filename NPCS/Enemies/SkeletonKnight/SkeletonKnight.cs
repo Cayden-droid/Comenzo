@@ -10,6 +10,9 @@ namespace SecretsOfMana.NPCS.Enemies.SkeletonKnight
 {
     public class SkeletonKnight : ModNPC
     {
+        // Placeholder sprite (vanilla Skeleton) until SkeletonKnight.png exists
+        public override string Texture => "Terraria/Images/NPC_" + NPCID.Skeleton;
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Skeleton];
@@ -17,8 +20,9 @@ namespace SecretsOfMana.NPCS.Enemies.SkeletonKnight
             NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Skeleton;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the Npc looks inside the bestiary 
-              Velocity = 1f // Draws the NPC walking +1 tiles in the x direction  
+              Velocity = 1f // Draws the NPC walking +1 tiles in the x direction
             };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()

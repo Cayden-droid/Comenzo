@@ -51,7 +51,7 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
             
             float dustRotation = Main.rand.NextFloatDirection() * MathHelper.PiOver2 * 0.7f;
             Vector2 dustPosition = Projectile.Center + dustRotation.ToRotationVector2() * 84f * Projectile.scale;
-            Vector2 duseVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver(2)).ToRotationVector2();
+            Vector2 duseVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver2).ToRotationVector2();
 
             if (Projectile.localAI[0] >= Projectile.ai[1])
             {

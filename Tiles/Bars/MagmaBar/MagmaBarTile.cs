@@ -5,7 +5,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SecretsOfMana.Tiles.Bars.MagmaBarTile
+namespace SecretsOfMana.Tiles.Bars.MagmaBar
 {
 	public class MagmaBarTile : ModTile
 	{

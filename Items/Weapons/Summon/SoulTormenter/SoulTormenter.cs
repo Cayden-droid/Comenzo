@@ -20,7 +20,7 @@ namespace SecretsOfMana.Items.Weapons.Summon.SoulTormenter
 
         public override void AddRecipes()
         {
-            Recipe.Create(ModContent.ItemType<Whip>())
+            Recipe.Create(ModContent.ItemType<SoulTormenter>())
                 .AddIngredient(ItemID.DirtBlock)
                 .AddTile(TileID.WorkBenches)
                 .Register();

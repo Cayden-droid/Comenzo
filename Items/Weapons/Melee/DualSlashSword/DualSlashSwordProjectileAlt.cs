@@ -62,6 +62,16 @@ namespace SecretsOfMana.Items.Weapons.Melee.DualSlashSword
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float coneLength = 94f * Projectile.scale;
+            float collisionRotation = MathHelper.Pi * 2f / 25f * Projectile.ai[0];
+            float coneRotation = Projectile.rotation + collisionRotation;
+
+            // Hit anything inside the swing's cone; otherwise fall back to the default hitbox check
+            if (targetHitbox.IntersectsConeSlowMoreAccurate(Projectile.Center, coneLength, coneRotation, MathHelper.PiOver4))
+            {
+                return true;
+            }
+
+            return null;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

@@ -10,6 +10,9 @@ namespace SecretsOfMana.Projectiles
 {
     public class MagmaArrow : ModProjectile
     {
+        // Placeholder sprite until a real MagmaArrow.png exists
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.WoodenArrowFriendly;
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.FiresFewerFromDaedalusStormbow[Type] = true; // Fires fewer arrows for DaedalusStormbow for balancing based of the type of arrow
